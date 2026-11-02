@@ -1,0 +1,10 @@
+"use client";
+import {cn} from "@/lib/utils";
+// @ts-nocheck — JSX source preserved during framework migration.
+import React,{useEffect,useRef} from 'react';
+import Link from 'next/link';import {ArrowUpRight} from 'lucide-react';
+import gsap from 'gsap';import {ScrollTrigger} from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
+const events=[{title:'Alumni Networking',desc:'Conversations that introduce new perspectives and lasting connections.',photo:'https://images.pexels.com/photos/40205532/pexels-photo-40205532.jpeg?auto=compress&cs=tinysrgb&w=900'},{title:'Founder Talks',desc:'Candid discussions about building, learning, and leading.',photo:'https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&w=900'},{title:'Startup Workshops',desc:'Collaborative sessions designed for practical founder learning.',photo:'https://images.pexels.com/photos/3184325/pexels-photo-3184325.jpeg?auto=compress&cs=tinysrgb&w=900'}];
+interface EventsGatheringsProps { className?: string; }
+export default function EventsGatherings({className}:EventsGatheringsProps){const ref=useRef(null);useEffect(()=>{if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;const ctx=gsap.context(()=>{gsap.fromTo('.event-tile',{y:85,opacity:0},{y:0,opacity:1,stagger:.18,duration:1,scrollTrigger:{trigger:'.event-grid',start:'top 85%',end:'bottom 80%',scrub:1}})},ref);return()=>ctx.revert()},[]);return <section className={cn("events-section",className)} ref={ref} id="events"><div className="events-intro"><span>EVENTS & GATHERINGS / 05</span><h2>Where connections<br/>happen.</h2><Link href="/events">EXPLORE ALL EVENTS <ArrowUpRight size={18}/></Link></div><div className="event-grid">{events.map((e,i)=><article className="event-tile" key={e.title}><div className="event-number">0{i+1} <span>—</span></div><img src={e.photo} alt={e.title} loading="lazy"/><h3>{e.title}</h3><p>{e.desc}</p><Link href="/events" aria-label={'Explore '+e.title}><ArrowUpRight size={21}/></Link></article>)}</div><p className="events-disclaimer">Event categories are illustrative; no dates or availability are confirmed.</p></section>}
